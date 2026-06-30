@@ -17,20 +17,20 @@ from .config import LoadConfig
 
 class EqnormCalculator(Calculator):
     """
-    Supported properties: 
+    Supported properties:
     ['energy', 'free_energy', 'forces', 'stress']
     """
     implemented_properties = ['energy', 'free_energy', 'forces', 'stress']
 
     url_dict = {
         'eqnorm': {
-            'eqnorm-mptrj': "https://figshare.com/files/55429685",
-            'eqnorm-omat': "https://figshare.com/files/00000000",
-            'eqnorm-max-mptrj': "https://figshare.com/files/00000001",
+            'eqnorm-mptrj': "https://api.figshare.com/v2/file/download/55429685",
+            'eqnorm-omat': "https://api.figshare.com/v2/file/download/00000000",
+            'eqnorm-max-mptrj': "https://api.figshare.com/v2/file/download/00000001",
             }
         }
 
-    def __init__(self, 
+    def __init__(self,
                  model_name: str,
                  model_variant: str,
                  device: str="cuda",
@@ -97,10 +97,10 @@ class EqnormCalculator(Calculator):
         energy_shift, energy_scale = checkpoint['energy_shift'], checkpoint['energy_scale']
 
         self.model = HDNNP(
-            args=self.model_args, 
-            unique_elements=unique_elements, 
-            shift=energy_shift, 
-            scale=energy_scale, 
+            args=self.model_args,
+            unique_elements=unique_elements,
+            shift=energy_shift,
+            scale=energy_scale,
             )
         self.model = self.model.to(self.device)
 
@@ -126,13 +126,13 @@ class EqnormCalculator(Calculator):
 
         calculator = vesin.NeighborList(cutoff=self.r_cutoff, full_list=True, sorted=False)
         idx_i, idx_j, shifts = calculator.compute(
-            points=atoms.positions, 
-            box=atoms.cell.array, 
-            periodic=True, 
+            points=atoms.positions,
+            box=atoms.cell.array,
+            periodic=True,
             quantities="ijS"
             )
         idx_i, idx_j = idx_i.astype(np.int64), idx_j.astype(np.int64)
-        
+
         idx_i, idx_j, shifts = torch.tensor(idx_i).long(), torch.tensor(idx_j).long(), torch.tensor(shifts).long()
 
         data = Data(
