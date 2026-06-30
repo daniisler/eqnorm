@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "eqnorm"
-version = "0.1.0"
+version = "0.1.1"
 description = "A machine learning potential energy project eqnorm"
 
 authors = [
@@ -32,8 +32,8 @@ classifiers = [
 dependencies = [
     "torch>=2.6.0",
     "torch_geometric",
-    "torchvision==0.21.0",
-    "torchaudio==2.6.0",
+    "torchvision",
+    "torchaudio",
     "torch_scatter",
 
     "ase",
