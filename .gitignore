@@ -1,3 +1,4 @@
+dist/
 __pycache__/
 *.pyc
 log/*       # 忽略 log/ 文件夹中的所有文件和子文件夹
